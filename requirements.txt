@@ -1,1 +1,4 @@
+numpy>=1.26
 pytest>=8
+# optional, for cross-lingual retrieval
+sentence-transformers>=3.0

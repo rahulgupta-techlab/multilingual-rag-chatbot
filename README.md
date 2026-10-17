@@ -10,7 +10,7 @@ Work in progress. It is built in small steps with tests:
 
 - [x] Section-aware markdown chunking with stable chunk IDs for citations
 - [x] Lightweight EN/DE language detection for routing answers
-- [ ] Multilingual embeddings (`paraphrase-multilingual-MiniLM-L12-v2`) and vector search
+- [x] Multilingual embeddings (`paraphrase-multilingual-MiniLM-L12-v2`) and vector search. First check: German question → English doc and vice versa, **4/4 top-1** with the multilingual model vs 2/4 with a lexical baseline
 - [ ] Hybrid retrieval (BM25 + dense, Reciprocal Rank Fusion)
 - [ ] Cross-lingual retrieval benchmark (recall@k, MRR) on labelled EN/DE questions
 - [ ] Answer generation via any OpenAI-compatible LLM (vLLM / Ollama / OpenAI), with an extractive fallback

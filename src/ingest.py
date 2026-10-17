@@ -23,8 +23,11 @@ class Chunk:
     lang: str        # "en" | "de" | "unknown"
 
 
+_UMLAUTS = str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"})
+
+
 def _slug(s: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
+    return re.sub(r"[^a-z0-9]+", "-", s.lower().translate(_UMLAUTS)).strip("-")
 
 
 def split_markdown(doc: str, markdown: str, max_chars: int = 1200) -> list[Chunk]:

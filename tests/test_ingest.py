@@ -31,3 +31,8 @@ def test_corpus_has_both_languages():
     langs = {c.lang for c in chunks}
     assert langs == {"en", "de"}
     assert len(chunks) == 16
+
+
+def test_slug_transliterates_umlauts():
+    chunks = split_markdown("doc", "# T\n## Öffnungszeiten\nText.\n## Gebühren\nText.")
+    assert [c.id for c in chunks] == ["doc#oeffnungszeiten", "doc#gebuehren"]

@@ -26,4 +26,4 @@ python -m pytest
 
 ## License
 
-MIT
+Copyright (c) 2026 Rahul Gupta. All rights reserved. Published for viewing and evaluation only; copying or reuse requires written permission. See [LICENSE](LICENSE).

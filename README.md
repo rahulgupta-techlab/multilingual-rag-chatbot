@@ -1,6 +1,6 @@
 # Multilingual RAG Chatbot (EN / DE)
 
-A retrieval-augmented chatbot that answers questions about policy documents in **English and German**, in the user's language, **with citations**, including **cross-lingual** questions (ask in German, answer from an English document and vice versa).
+A retrieval-augmented chatbot that answers questions about documents in **English and German**, in the user's language, **with citations**, including **cross-lingual** questions (ask in German, answer from an English document and vice versa).
 
 The corpus is a small set of self-written rulebooks (bike rental, library, coworking space, gym) so the project runs offline and the answers can be checked by hand.
 

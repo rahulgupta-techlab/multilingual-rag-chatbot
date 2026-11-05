@@ -14,7 +14,7 @@ Work in progress. It is built in small steps with tests:
 - [x] Hybrid retrieval: BM25 with EN/DE stopwords and umlaut folding, plus dense search, merged with Reciprocal Rank Fusion (rank-based, so BM25 and cosine scores never need calibrating). BM25 catches exact tokens like network names that embeddings miss
 - [x] Cross-lingual retrieval benchmark (recall@k, MRR) on 32 labelled EN/DE questions, split into same-language and cross-lingual (see below)
 - [x] Answer generation via any OpenAI-compatible LLM (vLLM / Ollama / OpenAI), with an extractive fallback (see below)
-- [ ] FastAPI chat endpoint and Docker Compose (API + Qdrant + vLLM)
+- [x] FastAPI chat endpoint and Docker Compose (API + Qdrant + vLLM), with dense vectors stored in Qdrant (see below)
 - [ ] Groundedness and refusal evaluation ("I don't know" when the documents don't contain the answer)
 
 ## Retrieval benchmark
@@ -69,6 +69,45 @@ RAG_LLM_BASE_URL=http://localhost:11434/v1 RAG_LLM_MODEL=qwen2.5:7b-instruct \
 ```
 
 The tests cover the prompt, citation checking, every fallback path and the HTTP client against a local stub server, so CI needs no model. Answer quality with a real LLM is not measured yet; that is the groundedness and refusal evaluation on the checklist.
+
+## Chat API
+
+`src/api.py` serves the pipeline over HTTP with FastAPI. The index is built once at startup from `data/docs`.
+
+| Endpoint | What it does |
+|---|---|
+| `POST /chat` | Body: `question` (1–2000 characters), optional `top_k` (1–10, default `RAG_TOP_K` = 3). Returns the `answer`, its `lang`, the `mode` (`llm`, `extractive`, `no-context`), the cited chunk ids (`citations`), the cited chunks with title, section, language and text (`sources`), every chunk the answerer was given (`context`), the `fallback_reason` and `latency_ms`. Blank or too long questions get `422`. |
+| `GET /health` | Number of chunks, the retriever, where the vectors live (`qdrant`, `memory`, or `none` for BM25) and the LLM model, if any. |
+
+Configuration is by environment variable: `RAG_RETRIEVER` (any retriever from the benchmark, default `hybrid-hashing`), `RAG_QDRANT_URL` (if set, the dense vectors are stored in and searched from that Qdrant server instead of in memory), `RAG_TOP_K`, `RAG_DOCS` and the `RAG_LLM_*` variables above.
+
+```bash
+uvicorn src.api:app --port 8080
+curl -X POST localhost:8080/chat -H 'content-type: application/json' \
+    -d '{"question": "Kann ich die Mitgliedschaft pausieren, wenn ich krank bin?"}'
+# {"answer": "Bei Krankheit oder Schwangerschaft kann die Mitgliedschaft mit ärztlichem Attest für bis zu
+#   3 Monate pausiert werden. [fitnessstudio_de#pausieren]", "lang": "de", "mode": "extractive",
+#   "citations": ["fitnessstudio_de#pausieren"], "sources": [...], ...}
+```
+
+`src/qdrant_store.py` (`QdrantIndex`) has the same interface as the in-memory `VectorIndex`, so it plugs into `HybridRetriever` unchanged. It uses cosine distance, maps each chunk id to a stable UUID5 point id and keeps the chunk id in the payload. A test runs all 32 benchmark questions through both indexes (Qdrant in its local in-memory mode) and checks that the top-5 rankings match. The API tests use FastAPI's `TestClient` and cover the extractive and LLM paths, invented citations, an unreachable LLM, request validation and the Qdrant-backed service.
+
+## Docker Compose
+
+[docker-compose.yml](docker-compose.yml) starts the API on port 8080 and Qdrant on 6333. The API waits for Qdrant to be healthy, writes the chunk vectors into a collection at startup and serves from it. vLLM is optional (profile `vllm`, needs an NVIDIA GPU) and serves `Qwen/Qwen2.5-1.5B-Instruct` on port 8000.
+
+```bash
+docker compose up -d --build --wait                  # API + Qdrant, extractive answers
+python scripts/smoke.py http://localhost:8080 --vector-store qdrant
+
+# with a local LLM on the GPU
+RAG_LLM_BASE_URL=http://vllm:8000/v1 docker compose --profile vllm up -d --build
+
+# multilingual embeddings: adds CPU-only torch and sentence-transformers to the image
+MULTILINGUAL=1 RAG_RETRIEVER=hybrid-multilingual docker compose up -d --build
+```
+
+By default the image contains only the offline retrievers, so it stays small and needs no model download. CI builds it, starts API and Qdrant with Compose and runs [scripts/smoke.py](scripts/smoke.py), which checks that `/health` reports Qdrant and that one English and one German question come back in their own language with a citation. The `MULTILINGUAL=1` image and the vLLM service are not exercised in CI.
 
 ## Run the tests
 

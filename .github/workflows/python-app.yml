@@ -37,3 +37,20 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+
+  docker:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build and start API + Qdrant
+      run: docker compose up -d --build --wait
+    - name: Smoke test the chat endpoint
+      run: python3 scripts/smoke.py http://localhost:8080 --vector-store qdrant
+    - name: Show logs
+      if: failure()
+      run: docker compose logs
+    - name: Stop
+      if: always()
+      run: docker compose down -v

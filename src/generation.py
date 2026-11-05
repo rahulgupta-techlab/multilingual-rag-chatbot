@@ -173,9 +173,9 @@ class RAGPipeline:
         self.top_k = top_k
         self.extractive = extractive or ExtractiveAnswerer()
 
-    def ask(self, question: str) -> Answer:
+    def ask(self, question: str, top_k: int | None = None) -> Answer:
         lang = answer_language(question)
-        hits = [self.chunks[cid] for cid, _ in self.retriever.search(question, top_k=self.top_k)
+        hits = [self.chunks[cid] for cid, _ in self.retriever.search(question, top_k=top_k or self.top_k)
                 if cid in self.chunks]
         ids = [c.id for c in hits]
         if not hits:

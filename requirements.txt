@@ -1,4 +1,5 @@
-numpy>=1.26
+-r requirements-api.txt
 pytest>=8
+httpx>=0.27
 # optional, for cross-lingual retrieval
 sentence-transformers>=3.0

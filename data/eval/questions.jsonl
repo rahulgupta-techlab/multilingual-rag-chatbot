@@ -1,32 +1,32 @@
-{"id": "q01", "lang": "en", "question": "Can I take a bike from a station in the middle of the night?", "relevant": ["bike_rental_en#opening-hours"]}
-{"id": "q02", "lang": "de", "question": "Wann ist die Kundenhotline des Fahrradverleihs erreichbar?", "relevant": ["bike_rental_en#opening-hours"]}
-{"id": "q03", "lang": "en", "question": "How much do I pay for a ride if I don't have a subscription?", "relevant": ["bike_rental_en#prices"]}
-{"id": "q04", "lang": "de", "question": "Was kostet eine Fahrt mit dem Leihrad nach der ersten halben Stunde?", "relevant": ["bike_rental_en#prices"]}
-{"id": "q05", "lang": "en", "question": "What should I do if my bike breaks during a ride?", "relevant": ["bike_rental_en#damage-and-accidents"]}
-{"id": "q06", "lang": "de", "question": "Muss ich zahlen, wenn das Leihrad beschädigt ist?", "relevant": ["bike_rental_en#damage-and-accidents"]}
-{"id": "q07", "lang": "en", "question": "How do I remove my bike rental profile and what happens to my data?", "relevant": ["bike_rental_en#account-deletion"]}
-{"id": "q08", "lang": "de", "question": "Wie lange werden meine Fahrtdaten gespeichert?", "relevant": ["bike_rental_en#account-deletion"]}
-{"id": "q09", "lang": "en", "question": "Can I get into the coworking space at midnight?", "relevant": ["coworking_en#access"]}
-{"id": "q10", "lang": "de", "question": "Zu welchen Uhrzeiten dürfen Tagesgäste den Coworking-Space nutzen?", "relevant": ["coworking_en#access"]}
-{"id": "q11", "lang": "en", "question": "Is there a fee if I cancel a room reservation at short notice?", "relevant": ["coworking_en#meeting-rooms"]}
-{"id": "q12", "lang": "de", "question": "Wie lange darf ich einen Besprechungsraum pro Tag reservieren?", "relevant": ["coworking_en#meeting-rooms"]}
-{"id": "q13", "lang": "en", "question": "How many visitors am I allowed to bring along?", "relevant": ["coworking_en#guests"]}
-{"id": "q14", "lang": "de", "question": "Darf ich Freunde mit in den Coworking-Space bringen?", "relevant": ["coworking_en#guests"]}
-{"id": "q15", "lang": "en", "question": "What is the wifi password and where do I find it?", "relevant": ["coworking_en#internet"]}
-{"id": "q16", "lang": "de", "question": "Wie heißt das WLAN im Coworking-Space?", "relevant": ["coworking_en#internet"]}
-{"id": "q17", "lang": "en", "question": "What is the minimum contract length of the gym membership?", "relevant": ["fitnessstudio_de#vertragslaufzeit"]}
-{"id": "q18", "lang": "de", "question": "Wie lange bin ich mindestens an das Fitnessstudio gebunden?", "relevant": ["fitnessstudio_de#vertragslaufzeit"]}
-{"id": "q19", "lang": "en", "question": "In what form do I have to submit the cancellation of my gym contract?", "relevant": ["fitnessstudio_de#kuendigung"]}
-{"id": "q20", "lang": "de", "question": "Kann ich vorzeitig kündigen, wenn ich in eine andere Stadt ziehe?", "relevant": ["fitnessstudio_de#kuendigung"]}
-{"id": "q21", "lang": "en", "question": "Are yoga classes included in the gym fee?", "relevant": ["fitnessstudio_de#kurse"]}
-{"id": "q22", "lang": "de", "question": "Bis wann muss ich mich für einen Spinning-Kurs anmelden?", "relevant": ["fitnessstudio_de#kurse"]}
-{"id": "q23", "lang": "en", "question": "Can I freeze my gym membership when I am sick?", "relevant": ["fitnessstudio_de#pausieren"]}
-{"id": "q24", "lang": "de", "question": "Kann ich meinen Vertrag während der Schwangerschaft ruhen lassen?", "relevant": ["fitnessstudio_de#pausieren"]}
-{"id": "q25", "lang": "en", "question": "Is the library open on Sundays?", "relevant": ["stadtbibliothek_de#oeffnungszeiten"]}
-{"id": "q26", "lang": "de", "question": "Wann hat die Stadtbibliothek geöffnet?", "relevant": ["stadtbibliothek_de#oeffnungszeiten"]}
-{"id": "q27", "lang": "en", "question": "For how long can I borrow a book and can I renew it?", "relevant": ["stadtbibliothek_de#ausleihe"]}
-{"id": "q28", "lang": "de", "question": "Wie oft kann ich die Leihfrist eines Buches verlängern?", "relevant": ["stadtbibliothek_de#ausleihe"]}
-{"id": "q29", "lang": "en", "question": "What is the late fee for returning a book after the due date?", "relevant": ["stadtbibliothek_de#gebuehren"]}
-{"id": "q30", "lang": "de", "question": "Was kostet der Bibliotheksausweis für Studenten?", "relevant": ["stadtbibliothek_de#gebuehren"]}
-{"id": "q31", "lang": "en", "question": "What happens if I lose a library book?", "relevant": ["stadtbibliothek_de#verlust"]}
-{"id": "q32", "lang": "de", "question": "Was muss ich zahlen, wenn ich ein ausgeliehenes Buch verloren habe?", "relevant": ["stadtbibliothek_de#verlust"]}
+{"id": "q01", "lang": "en", "question": "Can I take a bike from a station in the middle of the night?", "relevant": ["bike_rental_en#opening-hours"], "facts": [["24 hours a day", "24 Stunden am Tag", "24/7", "rund um die Uhr", "around the clock", "at any time", "jederzeit"]]}
+{"id": "q02", "lang": "de", "question": "Wann ist die Kundenhotline des Fahrradverleihs erreichbar?", "relevant": ["bike_rental_en#opening-hours"], "facts": [["8:00", "8 Uhr", "8.00", "8 a.m.", "8 am"], ["18:00", "18 Uhr", "18.00", "6 p.m.", "6 pm"]]}
+{"id": "q03", "lang": "en", "question": "How much do I pay for a ride if I don't have a subscription?", "relevant": ["bike_rental_en#prices"], "facts": [["2 euros", "2 euro", "2 €", "€2", "2 EUR", "zwei Euro", "two euros"]]}
+{"id": "q04", "lang": "de", "question": "Was kostet eine Fahrt mit dem Leihrad nach der ersten halben Stunde?", "relevant": ["bike_rental_en#prices"], "facts": [["1 euro", "1 €", "€1", "1 EUR", "one euro", "ein Euro", "einen Euro"]]}
+{"id": "q05", "lang": "en", "question": "What should I do if my bike breaks during a ride?", "relevant": ["bike_rental_en#damage-and-accidents"], "facts": [["report", "melden", "melde", "Meldung"], ["24 hours", "24 Stunden"]]}
+{"id": "q06", "lang": "de", "question": "Muss ich zahlen, wenn das Leihrad beschädigt ist?", "relevant": ["bike_rental_en#damage-and-accidents"], "facts": [["not charged", "no charge", "nicht berechnet", "nicht in Rechnung gestellt", "keine Kosten", "nicht zahlen", "nichts zahlen", "nicht bezahlen", "kostenlos"]]}
+{"id": "q07", "lang": "en", "question": "How do I remove my bike rental profile and what happens to my data?", "relevant": ["bike_rental_en#account-deletion"], "facts": [["Settings", "Einstellungen"], ["6 months", "six months", "6 Monate", "sechs Monate"]]}
+{"id": "q08", "lang": "de", "question": "Wie lange werden meine Fahrtdaten gespeichert?", "relevant": ["bike_rental_en#account-deletion"], "facts": [["6 months", "six months", "6 Monate", "sechs Monate"]]}
+{"id": "q09", "lang": "en", "question": "Can I get into the coworking space at midnight?", "relevant": ["coworking_en#access"], "facts": [["24/7", "24 hours", "24 Stunden", "rund um die Uhr", "around the clock"]]}
+{"id": "q10", "lang": "de", "question": "Zu welchen Uhrzeiten dürfen Tagesgäste den Coworking-Space nutzen?", "relevant": ["coworking_en#access"], "facts": [["9:00", "9 Uhr", "9.00", "9 a.m.", "9 am"], ["19:00", "19 Uhr", "19.00", "7 p.m.", "7 pm"]]}
+{"id": "q11", "lang": "en", "question": "Is there a fee if I cancel a room reservation at short notice?", "relevant": ["coworking_en#meeting-rooms"], "facts": [["50 percent", "50 %", "50%", "50 Prozent", "half", "Hälfte"]]}
+{"id": "q12", "lang": "de", "question": "Wie lange darf ich einen Besprechungsraum pro Tag reservieren?", "relevant": ["coworking_en#meeting-rooms"], "facts": [["4 hours", "four hours", "4 Stunden", "vier Stunden"]]}
+{"id": "q13", "lang": "en", "question": "How many visitors am I allowed to bring along?", "relevant": ["coworking_en#guests"], "facts": [["two", "2", "zwei"]]}
+{"id": "q14", "lang": "de", "question": "Darf ich Freunde mit in den Coworking-Space bringen?", "relevant": ["coworking_en#guests"], "facts": [["two", "2", "zwei"]]}
+{"id": "q15", "lang": "en", "question": "What is the wifi password and where do I find it?", "relevant": ["coworking_en#internet"], "facts": [["first day", "ersten Tag"], ["kitchen", "Küche"]]}
+{"id": "q16", "lang": "de", "question": "Wie heißt das WLAN im Coworking-Space?", "relevant": ["coworking_en#internet"], "facts": [["CoWork-Members"]]}
+{"id": "q17", "lang": "en", "question": "What is the minimum contract length of the gym membership?", "relevant": ["fitnessstudio_de#vertragslaufzeit"], "facts": [["12 months", "twelve months", "12 Monate", "12 Monaten", "zwölf Monate", "zwölf Monaten", "one year", "1 year", "ein Jahr"]]}
+{"id": "q18", "lang": "de", "question": "Wie lange bin ich mindestens an das Fitnessstudio gebunden?", "relevant": ["fitnessstudio_de#vertragslaufzeit"], "facts": [["12 months", "twelve months", "12 Monate", "12 Monaten", "zwölf Monate", "zwölf Monaten", "one year", "1 year", "ein Jahr"]]}
+{"id": "q19", "lang": "en", "question": "In what form do I have to submit the cancellation of my gym contract?", "relevant": ["fitnessstudio_de#kuendigung"], "facts": [["e-mail", "email", "E-Mail"], ["member portal", "members' portal", "portal", "Mitgliederportal"]]}
+{"id": "q20", "lang": "de", "question": "Kann ich vorzeitig kündigen, wenn ich in eine andere Stadt ziehe?", "relevant": ["fitnessstudio_de#kuendigung"], "facts": [["Sonderkündigung", "special termination", "extraordinary termination", "special cancellation", "außerordentlich"], ["Nachweis", "proof", "evidence"]]}
+{"id": "q21", "lang": "en", "question": "Are yoga classes included in the gym fee?", "relevant": ["fitnessstudio_de#kurse"], "facts": [["included", "enthalten", "inklusive", "inbegriffen"]]}
+{"id": "q22", "lang": "de", "question": "Bis wann muss ich mich für einen Spinning-Kurs anmelden?", "relevant": ["fitnessstudio_de#kurse"], "facts": [["2 hours", "two hours", "2 Stunden", "zwei Stunden"]]}
+{"id": "q23", "lang": "en", "question": "Can I freeze my gym membership when I am sick?", "relevant": ["fitnessstudio_de#pausieren"], "facts": [["3 months", "three months", "3 Monate", "drei Monate"], ["Attest", "certificate", "doctor's note", "medical note"]]}
+{"id": "q24", "lang": "de", "question": "Kann ich meinen Vertrag während der Schwangerschaft ruhen lassen?", "relevant": ["fitnessstudio_de#pausieren"], "facts": [["3 months", "three months", "3 Monate", "drei Monate"]]}
+{"id": "q25", "lang": "en", "question": "Is the library open on Sundays?", "relevant": ["stadtbibliothek_de#oeffnungszeiten"], "facts": [["closed", "geschlossen", "not open", "nicht geöffnet"]]}
+{"id": "q26", "lang": "de", "question": "Wann hat die Stadtbibliothek geöffnet?", "relevant": ["stadtbibliothek_de#oeffnungszeiten"], "facts": [["Montag", "Monday"], ["Samstag", "Saturday"], ["10"], ["20", "8 p.m.", "8 pm"]]}
+{"id": "q27", "lang": "en", "question": "For how long can I borrow a book and can I renew it?", "relevant": ["stadtbibliothek_de#ausleihe"], "facts": [["4 weeks", "four weeks", "4 Wochen", "vier Wochen"], ["twice", "two times", "2 times", "zweimal", "zwei Mal", "2 Mal"]]}
+{"id": "q28", "lang": "de", "question": "Wie oft kann ich die Leihfrist eines Buches verlängern?", "relevant": ["stadtbibliothek_de#ausleihe"], "facts": [["twice", "two times", "2 times", "zweimal", "zwei Mal", "2 Mal"]]}
+{"id": "q29", "lang": "en", "question": "What is the late fee for returning a book after the due date?", "relevant": ["stadtbibliothek_de#gebuehren"], "facts": [["1 euro", "1 €", "€1", "1 EUR", "one euro", "ein Euro", "einen Euro"], ["week", "Woche"]]}
+{"id": "q30", "lang": "de", "question": "Was kostet der Bibliotheksausweis für Studenten?", "relevant": ["stadtbibliothek_de#gebuehren"], "facts": [["free", "free of charge", "kostenlos", "gratis", "nichts"]]}
+{"id": "q31", "lang": "en", "question": "What happens if I lose a library book?", "relevant": ["stadtbibliothek_de#verlust"], "facts": [["replacement", "replace", "Wiederbeschaffungswert"], ["5 euros", "5 euro", "5 €", "€5", "5 EUR", "fünf Euro", "five euros"]]}
+{"id": "q32", "lang": "de", "question": "Was muss ich zahlen, wenn ich ein ausgeliehenes Buch verloren habe?", "relevant": ["stadtbibliothek_de#verlust"], "facts": [["replacement", "replace", "Wiederbeschaffungswert"], ["5 euros", "5 euro", "5 €", "€5", "5 EUR", "fünf Euro", "five euros"]]}

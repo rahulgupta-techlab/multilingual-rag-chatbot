@@ -1,0 +1,16 @@
+{"id": "u01", "lang": "en", "question": "Can I take my dog with me on a rental bike?", "near": "bike_rental_en"}
+{"id": "u02", "lang": "en", "question": "Do the rental bikes come with a helmet?", "near": "bike_rental_en"}
+{"id": "u03", "lang": "en", "question": "Is there free parking for members at the coworking space?", "near": "coworking_en"}
+{"id": "u04", "lang": "en", "question": "How much does it cost to print documents at the coworking space?", "near": "coworking_en"}
+{"id": "u05", "lang": "en", "question": "Does the gym have a sauna?", "near": "fitnessstudio_de"}
+{"id": "u06", "lang": "en", "question": "What is the monthly fee for the gym membership?", "near": "fitnessstudio_de"}
+{"id": "u07", "lang": "en", "question": "Can I borrow e-books from the library?", "near": "stadtbibliothek_de"}
+{"id": "u08", "lang": "en", "question": "How many books can I borrow at the same time?", "near": "stadtbibliothek_de"}
+{"id": "u09", "lang": "de", "question": "Wie viel kostet das Abo für den Fahrradverleih im Monat?", "near": "bike_rental_en"}
+{"id": "u10", "lang": "de", "question": "Kann ich beim Fahrradverleih auch ein E-Bike ausleihen?", "near": "bike_rental_en"}
+{"id": "u11", "lang": "de", "question": "Gibt es im Coworking-Space abschließbare Schließfächer?", "near": "coworking_en"}
+{"id": "u12", "lang": "de", "question": "Darf ich meinen Hund mit in den Coworking-Space bringen?", "near": "coworking_en"}
+{"id": "u13", "lang": "de", "question": "Ist das Fitnessstudio auch am Sonntag geöffnet?", "near": "fitnessstudio_de"}
+{"id": "u14", "lang": "de", "question": "Bietet das Fitnessstudio Personal Training an?", "near": "fitnessstudio_de"}
+{"id": "u15", "lang": "de", "question": "Kann ich in der Stadtbibliothek einen Lernraum reservieren?", "near": "stadtbibliothek_de"}
+{"id": "u16", "lang": "de", "question": "Gibt es in der Stadtbibliothek ein Café?", "near": "stadtbibliothek_de"}

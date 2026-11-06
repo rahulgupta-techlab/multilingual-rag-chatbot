@@ -87,6 +87,15 @@ def extract_citations(text: str, allowed: Sequence[str]) -> list[str]:
     return seen
 
 
+def question_overlap(question: str, sentences: Sequence[str]) -> float:
+    """Share of the question's distinct terms (BM25 tokenizer) that occur in the sentences."""
+    terms = set(tokenize(question))
+    if not terms:
+        return 0.0
+    found = {t for sent in sentences for t in tokenize(sent)}
+    return len(terms & found) / len(terms)
+
+
 class OpenAICompatibleClient:
     """Minimal chat completions client (stdlib only).
 
@@ -137,10 +146,15 @@ class ExtractiveAnswerer:
     chunk is used, since retrieval already judged that chunk the most
     relevant. No translation happens here: the sentences stay in the
     document's language.
+
+    min_overlap makes it abstain: if the picked sentences contain less than
+    this share of the question's terms, it returns the "I don't know" answer
+    instead of quoting. The default 0 never abstains; any value above 0 also
+    abstains on questions with no overlap, i.e. most cross-lingual ones.
     """
 
-    def __init__(self, max_sentences: int = 2, min_ratio: float = 0.5):
-        self.max_sentences, self.min_ratio = max_sentences, min_ratio
+    def __init__(self, max_sentences: int = 2, min_ratio: float = 0.5, min_overlap: float = 0.0):
+        self.max_sentences, self.min_ratio, self.min_overlap = max_sentences, min_ratio, min_overlap
 
     def answer(self, question: str, chunks: Sequence[Chunk], lang: str) -> tuple[str, list[str]]:
         sentences = [(rank, i, chunk.id, sent, set(tokenize(sent)))
@@ -160,6 +174,8 @@ class ExtractiveAnswerer:
         else:
             picked = [min(scored, key=lambda c: (c[1], c[2]))]
         picked.sort(key=lambda c: (c[1], c[2]))
+        if self.min_overlap > 0 and question_overlap(question, [c[4] for c in picked]) < self.min_overlap:
+            return NO_ANSWER[lang], []
         cid = picked[0][3]
         return " ".join(c[4] for c in picked) + f" [{cid}]", [cid]
 

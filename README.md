@@ -15,7 +15,7 @@ Work in progress. It is built in small steps with tests:
 - [x] Cross-lingual retrieval benchmark (recall@k, MRR) on 32 labelled EN/DE questions, split into same-language and cross-lingual (see below)
 - [x] Answer generation via any OpenAI-compatible LLM (vLLM / Ollama / OpenAI), with an extractive fallback (see below)
 - [x] FastAPI chat endpoint and Docker Compose (API + Qdrant + vLLM), with dense vectors stored in Qdrant (see below)
-- [ ] Groundedness and refusal evaluation ("I don't know" when the documents don't contain the answer)
+- [x] Groundedness and refusal evaluation ("I don't know" when the documents don't contain the answer), on the 32 benchmark questions plus 16 unanswerable ones (see below)
 
 ## Retrieval benchmark
 
@@ -68,7 +68,61 @@ RAG_LLM_BASE_URL=http://localhost:11434/v1 RAG_LLM_MODEL=qwen2.5:7b-instruct \
     python -m src.generation "Wie lange darf ich einen Besprechungsraum buchen?" --retriever hybrid-multilingual
 ```
 
-The tests cover the prompt, citation checking, every fallback path and the HTTP client against a local stub server, so CI needs no model. Answer quality with a real LLM is not measured yet; that is the groundedness and refusal evaluation on the checklist.
+The tests cover the prompt, citation checking, every fallback path and the HTTP client against a local stub server, so CI needs no model. Answer quality is measured by the groundedness and refusal evaluation below.
+
+## Groundedness and refusal evaluation
+
+`src/grounding.py` runs the whole pipeline (retrieval + answer) on two question sets:
+
+- the 32 benchmark questions, each now labelled with the **facts** a correct answer must state. A fact is a list of accepted spellings in both languages (`"2 euros"`, `"2 Euro"`, `"zwei Euro"`), so a quoted answer and a translated LLM answer are matched the same way. A test checks that every fact occurs in the section the question is labelled with.
+- 16 **unanswerable** questions in `data/eval/unanswerable.jsonl` (8 EN, 8 DE) that sound like they belong to one of the documents but are not answered by any of them: a sauna in the gym, e-books in the library, the price of the bike subscription, Sunday opening hours of the gym (the library's Sunday rule is in the corpus, the gym's is not). The right reply is the fixed "I don't know" sentence.
+
+Every answer is checked for:
+
+| check | definition |
+|---|---|
+| correct | not a refusal, and every fact appears (case-insensitive, word-bounded, so `2 euro` does not match `12 euro`) |
+| cites relevant | at least one citation is a chunk labelled relevant for the question |
+| false refusal | an answerable question got "I don't know" |
+| refused unanswerable | an unanswerable question got "I don't know" |
+| grounded | not a refusal, cites at least one retrieved chunk, cites no id that was not retrieved, and every number in the answer (digits, or number words two to twelve in EN/DE) occurs in a cited chunk. Reported as a share of all non-refusal answers from both sets |
+
+The groundedness check needs no judge model and works across languages, because numbers are the same in both. It targets the most costly error in policy answers (a wrong price, deadline or opening hour) and does not catch a wrong claim without a number.
+
+The extractive fallback now has an optional abstention threshold, `ExtractiveAnswerer(min_overlap=...)`: if the sentences it would quote contain less than that share of the question's terms, it replies "I don't know". The default 0 keeps the old behaviour (always quote).
+
+```bash
+python -m src.grounding --extractive --retrievers bm25 hybrid-hashing --min-overlap 0 0.25 0.5 --json grounding.json
+```
+
+Measured with the offline retrievers and the **extractive answerer (no LLM)**, same as CI:
+
+| config | correct | same-lang | cross-lingual | cites relevant | false refusals | refused unanswerable | grounded answers |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| bm25 + extractive, min_overlap=0 | 0.344 | 0.562 | 0.125 | 0.406 | 0.250 | 0.125 | 1.000 (38) |
+| bm25 + extractive, min_overlap=0.25 | 0.188 | 0.375 | 0.000 | 0.188 | 0.750 | 0.812 | 1.000 (11) |
+| bm25 + extractive, min_overlap=0.5 | 0.031 | 0.062 | 0.000 | 0.031 | 0.969 | 1.000 | 1.000 (1) |
+| hybrid-hashing + extractive, min_overlap=0 | 0.344 | 0.562 | 0.125 | 0.406 | 0.000 | 0.000 | 1.000 (48) |
+| hybrid-hashing + extractive, min_overlap=0.25 | 0.188 | 0.375 | 0.000 | 0.188 | 0.750 | 0.812 | 1.000 (11) |
+| hybrid-hashing + extractive, min_overlap=0.5 | 0.031 | 0.062 | 0.000 | 0.031 | 0.969 | 1.000 | 1.000 (1) |
+
+What this shows:
+
+- Extractive answers are grounded by construction (they quote the cited chunk), so 1.000 here only confirms the check does not flag quotes. The tests feed it scripted LLM answers with an invented number, an invented citation and no citation, and it flags each.
+- Without a threshold the extractive answerer almost never says "I don't know": with the hybrid retriever it answers all 16 unanswerable questions with a quote from a related section. BM25's 0.125 refusals (and its 0.250 false refusals) come from questions with no term in common with any document, where retrieval returns nothing.
+- Term overlap is a poor abstention signal. At 0.25 it refuses 13 of 16 unanswerable questions but also 75% of the answerable ones, including 15 of the 16 cross-lingual ones, since a German question shares almost no terms with an English document. Telling "not in the documents" apart from "phrased differently" needs a model, which is what the LLM answerer's "I don't know" instruction is for.
+
+With an LLM (any OpenAI-compatible endpoint; the run uses the LLM for every question and falls back to extractive only on errors, which shows up as `extractive` in `summary.modes`):
+
+```bash
+RAG_LLM_BASE_URL=http://localhost:8000/v1 RAG_LLM_MODEL=Qwen/Qwen2.5-1.5B-Instruct \
+    python -m src.grounding --retrievers hybrid-hashing hybrid-multilingual --json grounding-llm.json
+```
+
+| config | correct | same-lang | cross-lingual | cites relevant | false refusals | refused unanswerable | grounded answers |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| hybrid-hashing + llm | | | | | | | |
+| hybrid-multilingual + llm | | | | | | | |
 
 ## Chat API
 
